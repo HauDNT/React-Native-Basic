@@ -8,9 +8,10 @@ import {
 import myImg from '../assets/myImg.png';
 
 const CategoryListItem = (props) => {
+    const { category } = props;
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>New category!</Text>
+            <Text style={styles.title}>{category.name}</Text>
             <Image 
                 style={styles.categoryImage}
                 source={myImg}></Image>
@@ -20,7 +21,7 @@ const CategoryListItem = (props) => {
 
 const styles = StyleSheet.create({
     container: {
-        marginBottom: 16,
+        margin: 8,
         alignItems: 'center',
         padding: 16,
         borderRadius: 4,
