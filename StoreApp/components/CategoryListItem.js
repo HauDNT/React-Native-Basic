@@ -3,19 +3,25 @@ import {
     View,
     Text,
     Image,
-    StyleSheet
+    StyleSheet,
+    TouchableOpacity,
+    Alert,
 } from 'react-native';
 import myImg from '../assets/myImg.png';
 
 const CategoryListItem = (props) => {
     const { category } = props;
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>{category.name}</Text>
-            <Image 
-                style={styles.categoryImage}
-                source={myImg}></Image>
-        </View>
+        <TouchableOpacity activeOpacity={0.5} onPress={() => {
+            Alert.alert("Click!");
+        }}>
+            <View style={styles.container}>
+                <Text style={styles.title}>{category.name}</Text>
+                <Image 
+                    style={styles.categoryImage}
+                    source={myImg}></Image>
+            </View>
+        </TouchableOpacity>
     )
 }
 

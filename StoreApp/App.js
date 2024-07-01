@@ -1,33 +1,13 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, ScrollView, FlatList } from "react-native";
-import CategoryListItem from "./components/CategoryListItem";
+import { StyleSheet, Text } from "react-native";
+import { createNavigationContainerRef } from '@react-navigation/native';
+import AppNavigator from "./AppNavigator";
+
+const AppContainer = createNavigationContainerRef(AppNavigator);
 
 export default function App() {
-    const data = [
-        {
-            id: 1,
-            name: 'Category 1',
-        },
-        {
-            id: 2,
-            name: 'Category 2',
-        },
-        {
-            id: 3,
-            name: 'Category 3',
-        },
-    ];
-
     return (
-        <View style={styles.container}>
-            <FlatList 
-                data={data} 
-                renderItem={
-                    ({item}) => <CategoryListItem category={item}/>
-                }
-                keyExtractor={(item) => item.id}
-            />
-        </View>
+        <AppContainerAppContainer/>
     );
 }
 
