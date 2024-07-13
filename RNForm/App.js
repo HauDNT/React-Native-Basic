@@ -1,72 +1,110 @@
-import { StyleSheet, Text, View, StatusBar, SafeAreaView, TextInput, Switch } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, Image, KeyboardAvoidingView, Platform } from 'react-native';
 import { useState } from 'react';
 
-
 export default function App() {
-    const [name, setName] = useState("");
-    const [isDarkMode, setIsDarkMode] = useState(false);
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [errors, setErrors] = useState({});
+
+    const validateForm = () => {
+        let errors = {};
+
+        if (!username) errors.username = "Username is required!";
+        if (!password) errors.password = "Password is required!";
+
+        setErrors(errors);
+
+        return Object.keys(errors).length === 0;    // true | false
+    };
+
+    const handleSubmit = () => {
+        if (validateForm()) {
+            console.log("Submitted!", username, password);
+            setUsername("");
+            setPassword("");
+            setErrors({});
+        }
+    };
 
     return (
-        <SafeAreaView style={styles.container}>
-            <TextInput 
-                style={styles.inputText}
-                value={name}
-                onChangeText={setName}
-                placeholder="Enter your name..."
-            />
-            <TextInput 
-                style={styles.multiText}
-                placeholder="Descript..."
-                multiline={true}
-            />
-            <Text style={styles.text}>My name is {name}</Text>
+        <KeyboardAvoidingView 
+            behavior="padding" 
+            keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0} 
+            style={styles.container}>
 
-            <View
-                style={styles.switchContainer}
-            >
-                <Text style={styles.text}>Dark Mode</Text>
-                <Switch
-                    value={isDarkMode}
-                    onValueChange={() => setIsDarkMode((prevState) => !prevState)}
-                    trackColor={{false: "#767577", true: "lightblue"}}
-                    thumbColor="f4f3f4"
+            <View style={styles.form}>
+                <Image source={require("./assets/form-icon.png")} style={styles.image}/>
+                <Text style={styles.label}>Username</Text>
+                <TextInput 
+                    style={styles.input} 
+                    placeholder="Enter your username"
+                    value={username}
+                    onChangeText={setUsername}
                 />
-            </View>
+                {
+                    errors.username ? <Text style={styles.errorText}>{errors.username}</Text> : null
+                }
 
-        </SafeAreaView>
+                <Text style={styles.label}>Password</Text>
+                <TextInput 
+                    style={styles.input} 
+                    placeholder="Enter your password" 
+                    secureTextEntry
+                    value={password}
+                    onChangeText={setPassword}
+                />
+                {
+                    errors.password ? <Text style={styles.errorText}>{errors.password}</Text> : null
+                }
+            
+                <Button title="Login" onPress={handleSubmit} />
+            </View>
+        </KeyboardAvoidingView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingTop: StatusBar.currentHeight,
+        justifyContent: "center",
+        paddingHorizontal: 20,
+        backgroundColor: "#f5f5f5",
     },
-    inputText: {
+    form: {
+        backgroundColor: "white",
+        padding: 20,
+        borderRadius: 10,
+        shadowColor: "black",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+    },
+    label: {
+        fontSize: 16,
+        marginBottom: 5,
+        fontWeight: "bold",
+    },
+    input: {
         height: 40,
-        width: "100%",
-        margin: 12,
-        padding: 12,
-        borderWidth: 1
+        borderColor: "#ddd",
+        borderWidth: 1,
+        marginBottom: 10,
+        padding: 10,
+        borderRadius: 5,
     },
-    text: {
-        fontSize: 30,
-        padding: 12,
-    },
-    multiText: {
-        minHeight: 100,
-        width: "100%",
-        margin: 12,
-        padding: 12,
-        borderWidth: 1
-    },
-    switchContainer: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        paddingHorizontal: 10,
+    image: {
+        width: 200,
+        height: 200,
+        alignSelf: "center",
+        marginBottom: 16,
+    },  
+    errorText: {
+        color: "red",
+        fontStyle: "italic",
+        marginBottom: 20,
     }
 });
