@@ -1,25 +1,22 @@
-import { StyleSheet, Text, View, ScrollView, SafeAreaView, StatusBar, FlatList } from 'react-native';
-import pokemonList from "./data.json";
+import { StyleSheet, Text, View, ScrollView, SafeAreaView, StatusBar, FlatList, SectionList } from 'react-native';
+import groupedPokemonList from "./grouped-data.json";
 
 export default function App() {
     return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.scrollView}>
-                <FlatList
-                    data={pokemonList}
-                    renderItem={({item}) => (
-                        <View style={styles.card} key={item.id}>
-                            <Text style={styles.cardText}>{item.name}</Text>
-                            <Text style={styles.cardText}>{item.type}</Text>
-                        </View>
-                    )}
-                    keyExtractor={(item) => item.id.toString()}
-                    ItemSeparatorComponent={<View style={{height: 16}}/>}
-                    ListEmptyComponent={<Text>No item found</Text>}
-                    ListHeaderComponent={<Text style={styles.headerList}>Pokemon List</Text>}
-                    ListFooterComponent={<Text style={styles.footerList}>End of Pokemon List</Text>}
-                />
-            </View>
+            <SectionList
+                sections={groupedPokemonList}
+                renderItem={({item}) => (
+                    <View style={styles.card}>
+                        <Text style={styles.cardText}>{item}</Text>
+                    </View>
+                )}
+                renderSectionHeader={({section}) => (
+                    <Text style={styles.sectionHeader}>{section.type}</Text>
+                )}
+                ItemSeparatorComponent={() => <View style={{height: 16}}/>}
+                SectionSeparatorComponent={() => <View style={{height: 16}}/>}
+            />
         </SafeAreaView>
     );
 }
@@ -44,6 +41,12 @@ const styles = StyleSheet.create({
         fontSize: 30,
     },
     headerList: {
+        fontSize: 24,
+        textAlign: "center",
+        marginVertical: 12,
+        fontWeight: "bold",
+    },
+    sectionHeader: {
         fontSize: 24,
         textAlign: "center",
         marginVertical: 12,
