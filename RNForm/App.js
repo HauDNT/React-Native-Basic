@@ -11,6 +11,16 @@ export default function App() {
                 style={styles.inputText}
                 value={name}
                 onChangeText={setName}
+                placeholder="Enter your name..."
+                // autoCorrect={false}
+                // autoCapitalize="words"
+                // secureTextEntry
+                // keyboardType="ascii-capable"
+            />
+            <TextInput 
+                style={styles.multiText}
+                placeholder="Descript..."
+                multiline={true}
             />
             <Text style={styles.text}>My name is {name}</Text>
 
@@ -36,5 +46,12 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 30,
         padding: 12,
+    },
+    multiText: {
+        minHeight: 100,
+        width: "100%",
+        margin: 12,
+        padding: 12,
+        borderWidth: 1
     }
 });
