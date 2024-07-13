@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View, StatusBar, SafeAreaView, TextInput } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, SafeAreaView, TextInput, Switch } from 'react-native';
 import { useState } from 'react';
 
 
 export default function App() {
     const [name, setName] = useState("");
+    const [isDarkMode, setIsDarkMode] = useState(false);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -12,10 +13,6 @@ export default function App() {
                 value={name}
                 onChangeText={setName}
                 placeholder="Enter your name..."
-                // autoCorrect={false}
-                // autoCapitalize="words"
-                // secureTextEntry
-                // keyboardType="ascii-capable"
             />
             <TextInput 
                 style={styles.multiText}
@@ -23,6 +20,18 @@ export default function App() {
                 multiline={true}
             />
             <Text style={styles.text}>My name is {name}</Text>
+
+            <View
+                style={styles.switchContainer}
+            >
+                <Text style={styles.text}>Dark Mode</Text>
+                <Switch
+                    value={isDarkMode}
+                    onValueChange={() => setIsDarkMode((prevState) => !prevState)}
+                    trackColor={{false: "#767577", true: "lightblue"}}
+                    thumbColor="f4f3f4"
+                />
+            </View>
 
         </SafeAreaView>
     );
@@ -53,5 +62,11 @@ const styles = StyleSheet.create({
         margin: 12,
         padding: 12,
         borderWidth: 1
+    },
+    switchContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        paddingHorizontal: 10,
     }
 });
